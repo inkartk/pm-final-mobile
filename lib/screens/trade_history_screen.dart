@@ -5,11 +5,25 @@ import '../utils/constants.dart';
 import '../utils/formatters.dart';
 import '../widgets/trade_list_item.dart';
 
-class TradeHistoryScreen extends ConsumerWidget {
+class TradeHistoryScreen extends ConsumerStatefulWidget {
   const TradeHistoryScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<TradeHistoryScreen> createState() => _TradeHistoryScreenState();
+}
+
+class _TradeHistoryScreenState extends ConsumerState<TradeHistoryScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Автоматически обновляем данные при входе на экран
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(tradeHistoryProvider.notifier).refresh();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final historyState = ref.watch(tradeHistoryProvider);
 
     return Scaffold(
