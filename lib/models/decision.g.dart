@@ -10,7 +10,7 @@ _$DecisionImpl _$$DecisionImplFromJson(Map<String, dynamic> json) =>
     _$DecisionImpl(
       action: json['action'] as String,
       confidence: (json['confidence'] as num).toDouble(),
-      modelVersion: json['model_version'] as String,
+      modelVersion: json['model_version'] as String?,
       reason: json['reason'] as String,
     );
 

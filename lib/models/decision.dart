@@ -8,7 +8,7 @@ class Decision with _$Decision {
   const factory Decision({
     required String action,
     required double confidence,
-    @JsonKey(name: 'model_version') required String modelVersion,
+    @JsonKey(name: 'model_version') String? modelVersion,
     required String reason,
   }) = _Decision;
 

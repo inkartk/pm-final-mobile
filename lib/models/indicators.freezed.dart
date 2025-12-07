@@ -26,6 +26,10 @@ mixin _$Indicators {
   double get sma50 => throw _privateConstructorUsedError;
   @JsonKey(name: 'rsi_14')
   double get rsi14 => throw _privateConstructorUsedError;
+  @JsonKey(name: 'current_price')
+  double? get currentPrice => throw _privateConstructorUsedError;
+  @JsonKey(name: 'price_change_1m')
+  double? get priceChange1m => throw _privateConstructorUsedError;
 
   /// Serializes this Indicators to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -46,7 +50,9 @@ abstract class $IndicatorsCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'sma_10') double sma10,
       @JsonKey(name: 'sma_50') double sma50,
-      @JsonKey(name: 'rsi_14') double rsi14});
+      @JsonKey(name: 'rsi_14') double rsi14,
+      @JsonKey(name: 'current_price') double? currentPrice,
+      @JsonKey(name: 'price_change_1m') double? priceChange1m});
 }
 
 /// @nodoc
@@ -67,6 +73,8 @@ class _$IndicatorsCopyWithImpl<$Res, $Val extends Indicators>
     Object? sma10 = null,
     Object? sma50 = null,
     Object? rsi14 = null,
+    Object? currentPrice = freezed,
+    Object? priceChange1m = freezed,
   }) {
     return _then(_value.copyWith(
       sma10: null == sma10
@@ -81,6 +89,14 @@ class _$IndicatorsCopyWithImpl<$Res, $Val extends Indicators>
           ? _value.rsi14
           : rsi14 // ignore: cast_nullable_to_non_nullable
               as double,
+      currentPrice: freezed == currentPrice
+          ? _value.currentPrice
+          : currentPrice // ignore: cast_nullable_to_non_nullable
+              as double?,
+      priceChange1m: freezed == priceChange1m
+          ? _value.priceChange1m
+          : priceChange1m // ignore: cast_nullable_to_non_nullable
+              as double?,
     ) as $Val);
   }
 }
@@ -96,7 +112,9 @@ abstract class _$$IndicatorsImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'sma_10') double sma10,
       @JsonKey(name: 'sma_50') double sma50,
-      @JsonKey(name: 'rsi_14') double rsi14});
+      @JsonKey(name: 'rsi_14') double rsi14,
+      @JsonKey(name: 'current_price') double? currentPrice,
+      @JsonKey(name: 'price_change_1m') double? priceChange1m});
 }
 
 /// @nodoc
@@ -115,6 +133,8 @@ class __$$IndicatorsImplCopyWithImpl<$Res>
     Object? sma10 = null,
     Object? sma50 = null,
     Object? rsi14 = null,
+    Object? currentPrice = freezed,
+    Object? priceChange1m = freezed,
   }) {
     return _then(_$IndicatorsImpl(
       sma10: null == sma10
@@ -129,6 +149,14 @@ class __$$IndicatorsImplCopyWithImpl<$Res>
           ? _value.rsi14
           : rsi14 // ignore: cast_nullable_to_non_nullable
               as double,
+      currentPrice: freezed == currentPrice
+          ? _value.currentPrice
+          : currentPrice // ignore: cast_nullable_to_non_nullable
+              as double?,
+      priceChange1m: freezed == priceChange1m
+          ? _value.priceChange1m
+          : priceChange1m // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -139,7 +167,9 @@ class _$IndicatorsImpl implements _Indicators {
   const _$IndicatorsImpl(
       {@JsonKey(name: 'sma_10') required this.sma10,
       @JsonKey(name: 'sma_50') required this.sma50,
-      @JsonKey(name: 'rsi_14') required this.rsi14});
+      @JsonKey(name: 'rsi_14') required this.rsi14,
+      @JsonKey(name: 'current_price') this.currentPrice,
+      @JsonKey(name: 'price_change_1m') this.priceChange1m});
 
   factory _$IndicatorsImpl.fromJson(Map<String, dynamic> json) =>
       _$$IndicatorsImplFromJson(json);
@@ -153,10 +183,16 @@ class _$IndicatorsImpl implements _Indicators {
   @override
   @JsonKey(name: 'rsi_14')
   final double rsi14;
+  @override
+  @JsonKey(name: 'current_price')
+  final double? currentPrice;
+  @override
+  @JsonKey(name: 'price_change_1m')
+  final double? priceChange1m;
 
   @override
   String toString() {
-    return 'Indicators(sma10: $sma10, sma50: $sma50, rsi14: $rsi14)';
+    return 'Indicators(sma10: $sma10, sma50: $sma50, rsi14: $rsi14, currentPrice: $currentPrice, priceChange1m: $priceChange1m)';
   }
 
   @override
@@ -166,12 +202,17 @@ class _$IndicatorsImpl implements _Indicators {
             other is _$IndicatorsImpl &&
             (identical(other.sma10, sma10) || other.sma10 == sma10) &&
             (identical(other.sma50, sma50) || other.sma50 == sma50) &&
-            (identical(other.rsi14, rsi14) || other.rsi14 == rsi14));
+            (identical(other.rsi14, rsi14) || other.rsi14 == rsi14) &&
+            (identical(other.currentPrice, currentPrice) ||
+                other.currentPrice == currentPrice) &&
+            (identical(other.priceChange1m, priceChange1m) ||
+                other.priceChange1m == priceChange1m));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, sma10, sma50, rsi14);
+  int get hashCode => Object.hash(
+      runtimeType, sma10, sma50, rsi14, currentPrice, priceChange1m);
 
   /// Create a copy of Indicators
   /// with the given fields replaced by the non-null parameter values.
@@ -191,9 +232,12 @@ class _$IndicatorsImpl implements _Indicators {
 
 abstract class _Indicators implements Indicators {
   const factory _Indicators(
-      {@JsonKey(name: 'sma_10') required final double sma10,
-      @JsonKey(name: 'sma_50') required final double sma50,
-      @JsonKey(name: 'rsi_14') required final double rsi14}) = _$IndicatorsImpl;
+          {@JsonKey(name: 'sma_10') required final double sma10,
+          @JsonKey(name: 'sma_50') required final double sma50,
+          @JsonKey(name: 'rsi_14') required final double rsi14,
+          @JsonKey(name: 'current_price') final double? currentPrice,
+          @JsonKey(name: 'price_change_1m') final double? priceChange1m}) =
+      _$IndicatorsImpl;
 
   factory _Indicators.fromJson(Map<String, dynamic> json) =
       _$IndicatorsImpl.fromJson;
@@ -207,6 +251,12 @@ abstract class _Indicators implements Indicators {
   @override
   @JsonKey(name: 'rsi_14')
   double get rsi14;
+  @override
+  @JsonKey(name: 'current_price')
+  double? get currentPrice;
+  @override
+  @JsonKey(name: 'price_change_1m')
+  double? get priceChange1m;
 
   /// Create a copy of Indicators
   /// with the given fields replaced by the non-null parameter values.

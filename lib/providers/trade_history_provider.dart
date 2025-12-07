@@ -1,13 +1,14 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/trade.dart';
-import '../services/mock_api_service.dart';
+import '../services/api_client.dart';
 import 'trading_cycle_provider.dart';
 
 // Trade History Notifier
 class TradeHistoryNotifier extends StateNotifier<AsyncValue<List<Trade>>> {
-  final MockApiService _apiService;
+  final ApiClient _apiClient;
 
-  TradeHistoryNotifier(this._apiService) : super(const AsyncValue.loading()) {
+  TradeHistoryNotifier(this._apiClient) : super(const AsyncValue.loading()) {
     loadHistory();
   }
 
@@ -16,8 +17,27 @@ class TradeHistoryNotifier extends StateNotifier<AsyncValue<List<Trade>>> {
     state = const AsyncValue.loading();
 
     try {
-      final history = await _apiService.getTradeHistory();
+      final history = await _apiClient.getTradeHistory();
       state = AsyncValue.data(history);
+    } on DioException catch (e) {
+      // Обработка сетевых ошибок
+      if (e.type == DioExceptionType.connectionTimeout ||
+          e.type == DioExceptionType.receiveTimeout) {
+        state = AsyncValue.error(
+          'Превышено время ожидания при загрузке истории',
+          StackTrace.current,
+        );
+      } else if (e.type == DioExceptionType.connectionError) {
+        state = AsyncValue.error(
+          'Ошибка подключения к серверу',
+          StackTrace.current,
+        );
+      } else {
+        state = AsyncValue.error(
+          'Ошибка при загрузке истории: ${e.message}',
+          StackTrace.current,
+        );
+      }
     } catch (error, stackTrace) {
       state = AsyncValue.error(error, stackTrace);
     }
@@ -32,6 +52,6 @@ class TradeHistoryNotifier extends StateNotifier<AsyncValue<List<Trade>>> {
 // Trade History Provider
 final tradeHistoryProvider =
     StateNotifierProvider<TradeHistoryNotifier, AsyncValue<List<Trade>>>((ref) {
-  final apiService = ref.watch(mockApiServiceProvider);
-  return TradeHistoryNotifier(apiService);
+  final apiClient = ref.watch(apiClientProvider);
+  return TradeHistoryNotifier(apiClient);
 });

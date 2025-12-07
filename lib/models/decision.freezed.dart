@@ -23,7 +23,7 @@ mixin _$Decision {
   String get action => throw _privateConstructorUsedError;
   double get confidence => throw _privateConstructorUsedError;
   @JsonKey(name: 'model_version')
-  String get modelVersion => throw _privateConstructorUsedError;
+  String? get modelVersion => throw _privateConstructorUsedError;
   String get reason => throw _privateConstructorUsedError;
 
   /// Serializes this Decision to a JSON map.
@@ -44,7 +44,7 @@ abstract class $DecisionCopyWith<$Res> {
   $Res call(
       {String action,
       double confidence,
-      @JsonKey(name: 'model_version') String modelVersion,
+      @JsonKey(name: 'model_version') String? modelVersion,
       String reason});
 }
 
@@ -65,7 +65,7 @@ class _$DecisionCopyWithImpl<$Res, $Val extends Decision>
   $Res call({
     Object? action = null,
     Object? confidence = null,
-    Object? modelVersion = null,
+    Object? modelVersion = freezed,
     Object? reason = null,
   }) {
     return _then(_value.copyWith(
@@ -77,10 +77,10 @@ class _$DecisionCopyWithImpl<$Res, $Val extends Decision>
           ? _value.confidence
           : confidence // ignore: cast_nullable_to_non_nullable
               as double,
-      modelVersion: null == modelVersion
+      modelVersion: freezed == modelVersion
           ? _value.modelVersion
           : modelVersion // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       reason: null == reason
           ? _value.reason
           : reason // ignore: cast_nullable_to_non_nullable
@@ -100,7 +100,7 @@ abstract class _$$DecisionImplCopyWith<$Res>
   $Res call(
       {String action,
       double confidence,
-      @JsonKey(name: 'model_version') String modelVersion,
+      @JsonKey(name: 'model_version') String? modelVersion,
       String reason});
 }
 
@@ -119,7 +119,7 @@ class __$$DecisionImplCopyWithImpl<$Res>
   $Res call({
     Object? action = null,
     Object? confidence = null,
-    Object? modelVersion = null,
+    Object? modelVersion = freezed,
     Object? reason = null,
   }) {
     return _then(_$DecisionImpl(
@@ -131,10 +131,10 @@ class __$$DecisionImplCopyWithImpl<$Res>
           ? _value.confidence
           : confidence // ignore: cast_nullable_to_non_nullable
               as double,
-      modelVersion: null == modelVersion
+      modelVersion: freezed == modelVersion
           ? _value.modelVersion
           : modelVersion // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       reason: null == reason
           ? _value.reason
           : reason // ignore: cast_nullable_to_non_nullable
@@ -149,7 +149,7 @@ class _$DecisionImpl implements _Decision {
   const _$DecisionImpl(
       {required this.action,
       required this.confidence,
-      @JsonKey(name: 'model_version') required this.modelVersion,
+      @JsonKey(name: 'model_version') this.modelVersion,
       required this.reason});
 
   factory _$DecisionImpl.fromJson(Map<String, dynamic> json) =>
@@ -161,7 +161,7 @@ class _$DecisionImpl implements _Decision {
   final double confidence;
   @override
   @JsonKey(name: 'model_version')
-  final String modelVersion;
+  final String? modelVersion;
   @override
   final String reason;
 
@@ -208,7 +208,7 @@ abstract class _Decision implements Decision {
   const factory _Decision(
       {required final String action,
       required final double confidence,
-      @JsonKey(name: 'model_version') required final String modelVersion,
+      @JsonKey(name: 'model_version') final String? modelVersion,
       required final String reason}) = _$DecisionImpl;
 
   factory _Decision.fromJson(Map<String, dynamic> json) =
@@ -220,7 +220,7 @@ abstract class _Decision implements Decision {
   double get confidence;
   @override
   @JsonKey(name: 'model_version')
-  String get modelVersion;
+  String? get modelVersion;
   @override
   String get reason;
 
