@@ -166,15 +166,45 @@ class _CryptoCard extends StatelessWidget {
                   color: crypto.color.withOpacity(0.2),
                   shape: BoxShape.circle,
                 ),
-                child: Center(
-                  child: Text(
-                    crypto.icon,
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: crypto.color,
-                    ),
-                  ),
+                child: ClipOval(
+                  child: crypto.imageUrl != null
+                      ? Image.network(
+                          crypto.imageUrl!,
+                          width: 40,
+                          height: 40,
+                          fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) {
+                            // Fallback to icon if image fails to load
+                            return crypto.iconData != null
+                                ? Icon(
+                                    crypto.iconData,
+                                    size: 32,
+                                    color: crypto.color,
+                                  )
+                                : Text(
+                                    crypto.shortName[0],
+                                    style: TextStyle(
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.bold,
+                                      color: crypto.color,
+                                    ),
+                                  );
+                          },
+                        )
+                      : crypto.iconData != null
+                          ? Icon(
+                              crypto.iconData,
+                              size: 32,
+                              color: crypto.color,
+                            )
+                          : Text(
+                              crypto.shortName[0],
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                color: crypto.color,
+                              ),
+                            ),
                 ),
               ),
               const SizedBox(width: AppSizes.paddingMedium),

@@ -32,27 +32,35 @@ class AppFormatters {
   }
 
   // Date/Time Formatter - formats DateTime as readable string
+  // Converts UTC to local time before formatting
   static String formatDateTime(DateTime dateTime) {
+    final localTime = dateTime.toLocal();
     final formatter = DateFormat('MMM dd, yyyy HH:mm:ss');
-    return formatter.format(dateTime);
+    return formatter.format(localTime);
   }
 
   // Time Only Formatter - formats DateTime as time only
+  // Converts UTC to local time before formatting
   static String formatTime(DateTime dateTime) {
+    final localTime = dateTime.toLocal();
     final formatter = DateFormat('HH:mm:ss');
-    return formatter.format(dateTime);
+    return formatter.format(localTime);
   }
 
   // Date Only Formatter - formats DateTime as date only
+  // Converts UTC to local time before formatting
   static String formatDate(DateTime dateTime) {
+    final localTime = dateTime.toLocal();
     final formatter = DateFormat('MMM dd, yyyy');
-    return formatter.format(dateTime);
+    return formatter.format(localTime);
   }
 
   // Relative Time Formatter - formats as "5 minutes ago", "2 hours ago", etc.
+  // Converts UTC to local time before calculating difference
   static String formatRelativeTime(DateTime dateTime) {
+    final localTime = dateTime.toLocal();
     final now = DateTime.now();
-    final difference = now.difference(dateTime);
+    final difference = now.difference(localTime);
 
     if (difference.inSeconds < 60) {
       return 'Just now';
@@ -63,7 +71,7 @@ class AppFormatters {
     } else if (difference.inDays < 7) {
       return '${difference.inDays}d ago';
     } else {
-      return formatDate(dateTime);
+      return formatDate(localTime);
     }
   }
 

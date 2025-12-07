@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../providers/trading_cycle_provider.dart';
 import '../utils/constants.dart';
-import '../widgets/agent_flow_indicator.dart';
 import '../widgets/agent_card.dart';
-import '../widgets/price_card.dart';
+import '../widgets/agent_flow_indicator.dart';
 import '../widgets/decision_card.dart';
 import '../widgets/execution_card.dart';
-import 'trade_history_screen.dart';
+import '../widgets/price_card.dart';
 import 'agent_logs_screen.dart';
 import 'settings_screen.dart';
+import 'trade_history_screen.dart';
 
 class DashboardScreen extends ConsumerStatefulWidget {
   final String symbol;
 
   const DashboardScreen({
-    Key? key,
+    super.key,
     required this.symbol,
-  }) : super(key: key);
+  });
 
   @override
   ConsumerState<DashboardScreen> createState() => _DashboardScreenState();
@@ -54,15 +55,44 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 color: cryptoInfo.color.withOpacity(0.2),
                 shape: BoxShape.circle,
               ),
-              child: Center(
-                child: Text(
-                  cryptoInfo.icon,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: cryptoInfo.color,
-                  ),
-                ),
+              child: ClipOval(
+                child: cryptoInfo.imageUrl != null
+                    ? Image.network(
+                        cryptoInfo.imageUrl!,
+                        width: 24,
+                        height: 24,
+                        fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                          return cryptoInfo.iconData != null
+                              ? Icon(
+                                  cryptoInfo.iconData,
+                                  size: 20,
+                                  color: cryptoInfo.color,
+                                )
+                              : Text(
+                                  cryptoInfo.shortName[0],
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: cryptoInfo.color,
+                                  ),
+                                );
+                        },
+                      )
+                    : cryptoInfo.iconData != null
+                        ? Icon(
+                            cryptoInfo.iconData,
+                            size: 20,
+                            color: cryptoInfo.color,
+                          )
+                        : Text(
+                            cryptoInfo.shortName[0],
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: cryptoInfo.color,
+                            ),
+                          ),
               ),
             ),
             const SizedBox(width: 12),

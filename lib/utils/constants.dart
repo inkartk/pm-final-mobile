@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:crypto_font_icons/crypto_font_icons.dart';
 
 // Crypto Info Model
 class CryptoInfo {
   final String symbol;
   final String name;
   final String shortName;
-  final String icon;
+  final IconData? iconData; // Icon from crypto_font_icons package
+  final String? imageUrl; // Network image URL as fallback
   final Color color;
 
   const CryptoInfo({
     required this.symbol,
     required this.name,
     required this.shortName,
-    required this.icon,
+    this.iconData,
+    this.imageUrl,
     required this.color,
   });
 }
@@ -83,49 +86,52 @@ class AppStrings {
       symbol: 'BTCUSDT',
       name: 'Bitcoin',
       shortName: 'BTC',
-      icon: '₿',
+      iconData: CryptoFontIcons.BTC,
+      imageUrl: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png',
       color: Color(0xFFF7931A),
     ),
     CryptoInfo(
       symbol: 'ETHUSDT',
       name: 'Ethereum',
       shortName: 'ETH',
-      icon: 'Ξ',
+      iconData: CryptoFontIcons.ETH,
+      imageUrl: 'https://cryptologos.cc/logos/ethereum-eth-logo.png',
       color: Color(0xFF627EEA),
     ),
     CryptoInfo(
       symbol: 'BNBUSDT',
       name: 'Binance Coin',
       shortName: 'BNB',
-      icon: 'B',
+      imageUrl: 'https://cryptologos.cc/logos/bnb-bnb-logo.png',
       color: Color(0xFFF3BA2F),
     ),
     CryptoInfo(
       symbol: 'SOLUSDT',
       name: 'Solana',
       shortName: 'SOL',
-      icon: 'S',
+      imageUrl: 'https://cryptologos.cc/logos/solana-sol-logo.png',
       color: Color(0xFF14F195),
     ),
     CryptoInfo(
       symbol: 'ADAUSDT',
       name: 'Cardano',
       shortName: 'ADA',
-      icon: 'A',
+      imageUrl: 'https://cryptologos.cc/logos/cardano-ada-logo.png',
       color: Color(0xFF0033AD),
     ),
     CryptoInfo(
       symbol: 'DOGEUSDT',
       name: 'Dogecoin',
       shortName: 'DOGE',
-      icon: 'Ð',
+      iconData: CryptoFontIcons.DOGE,
+      imageUrl: 'https://cryptologos.cc/logos/dogecoin-doge-logo.png',
       color: Color(0xFFC2A633),
     ),
     CryptoInfo(
       symbol: 'MATICUSDT',
       name: 'Polygon',
       shortName: 'MATIC',
-      icon: 'M',
+      imageUrl: 'https://cryptologos.cc/logos/polygon-matic-logo.png',
       color: Color(0xFF8247E5),
     ),
   ];
