@@ -34,12 +34,12 @@ class PriceCard extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              'Источник: ${marketData.source}',
+              'Source: ${marketData.source}',
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const Divider(height: 24),
             Text(
-              'Технические индикаторы',
+              'Technical Indicators',
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),

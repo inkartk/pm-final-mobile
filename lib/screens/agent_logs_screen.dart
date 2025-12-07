@@ -17,7 +17,7 @@ class AgentLogsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
 
-        title: const Text('Логи агентов'),
+        title: const Text('Agent Logs'),
       ),
       body: ListView(
         padding: const EdgeInsets.all(AppSizes.paddingMedium),
@@ -30,20 +30,20 @@ class AgentLogsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Цикл #${cycle.cycleId}',
+                    'Cycle #${cycle.cycleId}',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Символ: ${cycle.marketData.symbol}',
+                    'Symbol: ${cycle.marketData.symbol}',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   Text(
-                    'Решение: ${cycle.decision.action} (${(cycle.decision.confidence * 100).toInt()}%)',
+                    'Decision: ${cycle.decision.action} (${(cycle.decision.confidence * 100).toInt()}%)',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   Text(
-                    'Статус: ${cycle.execution.status}',
+                    'Status: ${cycle.execution.status}',
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
@@ -85,29 +85,32 @@ class AgentLogsScreen extends StatelessWidget {
 
           // Info card explaining the flow
           Card(
-            color: Colors.blue.shade50,
+            color: AppColors.infoColor.withOpacity(0.15),
             child: Padding(
               padding: const EdgeInsets.all(AppSizes.paddingMedium),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
+                  const Row(
                     children: [
-                      Icon(Icons.info_outline, color: Colors.blue.shade700),
-                      const SizedBox(width: 8),
+                      Icon(Icons.info_outline, color: AppColors.infoColor),
+                      SizedBox(width: 8),
                       Text(
-                        'Поток данных',
+                        'Data Flow',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.blue.shade700,
+                          color: AppColors.infoColor,
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    '← Получение данных\n⚙ Обработка\n→ Отправка результата',
-                    style: TextStyle(color: Colors.blue.shade900, fontSize: 13),
+                    '← Receiving data\n⚙ Processing\n→ Sending result',
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.8),
+                      fontSize: 13,
+                    ),
                   ),
                 ],
               ),
@@ -136,16 +139,23 @@ class AgentLogsScreen extends StatelessWidget {
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(AppSizes.paddingMedium),
-            color: Colors.grey.shade100,
+            decoration: BoxDecoration(
+              color: AppColors.darkCardBackgroundHighlight,
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(AppSizes.borderRadiusMedium),
+                bottomRight: Radius.circular(AppSizes.borderRadiusMedium),
+              ),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SelectableText(
                   logs,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'monospace',
                     fontSize: 13,
                     height: 1.5,
+                    color: Colors.white.withOpacity(0.9),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -153,16 +163,19 @@ class AgentLogsScreen extends StatelessWidget {
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: logs));
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Логи скопированы в буфер обмена'),
-                        duration: Duration(seconds: 2),
+                      SnackBar(
+                        content: const Text('Logs copied to clipboard'),
+                        duration: const Duration(seconds: 2),
+                        backgroundColor: AppColors.successColor,
                       ),
                     );
                   },
                   icon: const Icon(Icons.copy, size: 16),
-                  label: const Text('Копировать'),
+                  label: const Text('Copy'),
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    side: const BorderSide(color: AppColors.activeColor),
+                    foregroundColor: AppColors.activeColor,
                   ),
                 ),
               ],

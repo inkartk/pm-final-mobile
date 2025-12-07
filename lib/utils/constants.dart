@@ -1,31 +1,45 @@
 import 'package:flutter/material.dart';
 
+// Crypto Info Model
+class CryptoInfo {
+  final String symbol;
+  final String name;
+  final String shortName;
+  final String icon;
+  final Color color;
+
+  const CryptoInfo({
+    required this.symbol,
+    required this.name,
+    required this.shortName,
+    required this.icon,
+    required this.color,
+  });
+}
+
 class AppColors {
   // Action Colors
-  static const Color buyColor = Color(0xFF4CAF50); // Green
-  static const Color sellColor = Color(0xFFF44336); // Red
+  static const Color buyColor = Color(0xFF00E676); // Bright Green
+  static const Color sellColor = Color(0xFFFF1744); // Bright Red
   static const Color holdColor = Color(0xFFFFC107); // Amber/Yellow
-  static const Color activeColor = Color(0xFF2196F3); // Blue
-  static const Color completedColor = Color(0xFF4CAF50); // Green
+  static const Color activeColor = Color(0xFF00BFA5); // Teal/Cyan
+  static const Color completedColor = Color(0xFF00E676); // Bright Green
 
   // Status Colors
-  static const Color successColor = Color(0xFF4CAF50);
-  static const Color errorColor = Color(0xFFF44336);
+  static const Color successColor = Color(0xFF00E676);
+  static const Color errorColor = Color(0xFFFF1744);
   static const Color warningColor = Color(0xFFFFC107);
-  static const Color infoColor = Color(0xFF2196F3);
+  static const Color infoColor = Color(0xFF00BFA5);
 
   // Confidence Colors
-  static const Color confidenceHigh = Color(0xFF4CAF50); // > 75%
+  static const Color confidenceHigh = Color(0xFF00E676); // > 75%
   static const Color confidenceMedium = Color(0xFFFF9800); // 50-75%
-  static const Color confidenceLow = Color(0xFFF44336); // < 50%
+  static const Color confidenceLow = Color(0xFFFF1744); // < 50%
 
-  // Background Colors (for light theme)
-  static const Color lightBackground = Color(0xFFF5F5F5);
-  static const Color lightCardBackground = Colors.white;
-
-  // Background Colors (for dark theme)
-  static const Color darkBackground = Color(0xFF121212);
-  static const Color darkCardBackground = Color(0xFF1E1E1E);
+  // Background Colors (dark theme only)
+  static const Color darkBackground = Color(0xFF0A0E27);
+  static const Color darkCardBackground = Color(0xFF1A1F3A);
+  static const Color darkCardBackgroundHighlight = Color(0xFF252B4A);
 }
 
 class AppSizes {
@@ -63,12 +77,57 @@ class AppStrings {
   static const String appDescription =
       'A Flutter application demonstrating a multi-agent AI trading system';
 
-  // Symbols
-  static const List<String> tradingSymbols = [
-    'BTCUSDT',
-    'ETHUSDT',
-    'BNBUSDT',
-    'SOLUSDT',
+  // Crypto List
+  static const List<CryptoInfo> cryptoList = [
+    CryptoInfo(
+      symbol: 'BTCUSDT',
+      name: 'Bitcoin',
+      shortName: 'BTC',
+      icon: '₿',
+      color: Color(0xFFF7931A),
+    ),
+    CryptoInfo(
+      symbol: 'ETHUSDT',
+      name: 'Ethereum',
+      shortName: 'ETH',
+      icon: 'Ξ',
+      color: Color(0xFF627EEA),
+    ),
+    CryptoInfo(
+      symbol: 'BNBUSDT',
+      name: 'Binance Coin',
+      shortName: 'BNB',
+      icon: 'B',
+      color: Color(0xFFF3BA2F),
+    ),
+    CryptoInfo(
+      symbol: 'SOLUSDT',
+      name: 'Solana',
+      shortName: 'SOL',
+      icon: 'S',
+      color: Color(0xFF14F195),
+    ),
+    CryptoInfo(
+      symbol: 'ADAUSDT',
+      name: 'Cardano',
+      shortName: 'ADA',
+      icon: 'A',
+      color: Color(0xFF0033AD),
+    ),
+    CryptoInfo(
+      symbol: 'DOGEUSDT',
+      name: 'Dogecoin',
+      shortName: 'DOGE',
+      icon: 'Ð',
+      color: Color(0xFFC2A633),
+    ),
+    CryptoInfo(
+      symbol: 'MATICUSDT',
+      name: 'Polygon',
+      shortName: 'MATIC',
+      icon: 'M',
+      color: Color(0xFF8247E5),
+    ),
   ];
 
   // Agent Names
@@ -92,10 +151,10 @@ class AppStrings {
 
   // Messages
   static const String emptyStateMessage =
-      'Нажмите кнопку чтобы запустить\nторговый цикл';
-  static const String loadingMessage = 'Запуск торгового цикла...';
-  static const String errorMessage = 'Произошла ошибка';
-  static const String noTradesMessage = 'Нет сделок в истории';
+      'Press the button to start\na trading cycle';
+  static const String loadingMessage = 'Starting trading cycle...';
+  static const String errorMessage = 'An error occurred';
+  static const String noTradesMessage = 'No trades in history';
 }
 
 class AppDurations {

@@ -40,7 +40,7 @@ class ExecutionCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Исполнение сделки',
+                  'Trade Execution',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Container(
@@ -63,20 +63,20 @@ class ExecutionCard extends StatelessWidget {
             const SizedBox(height: 16),
             if (execution.executed) ...[
               _buildInfoRow(
-                'Цена исполнения',
+                'Execution Price',
                 AppFormatters.formatPrice(execution.executionPrice),
                 context,
               ),
               const SizedBox(height: 8),
             ],
             _buildInfoRow(
-              'ID ордера',
+              'Order ID',
               execution.orderId,
               context,
             ),
             const SizedBox(height: 8),
             _buildInfoRow(
-              'Время',
+              'Time',
               AppFormatters.formatTime(execution.time),
               context,
             ),
@@ -85,19 +85,24 @@ class ExecutionCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.orange.shade50,
+                  color: AppColors.holdColor.withOpacity(0.15),
                   borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: AppColors.holdColor.withOpacity(0.3),
+                    width: 1,
+                  ),
                 ),
-                child: Row(
+                child: const Row(
                   children: [
-                    Icon(Icons.info_outline, color: Colors.orange.shade700, size: 20),
-                    const SizedBox(width: 8),
+                    Icon(Icons.info_outline, color: AppColors.holdColor, size: 20),
+                    SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        'Сделка не была исполнена (HOLD)',
+                        'Trade was not executed (HOLD)',
                         style: TextStyle(
-                          color: Colors.orange.shade700,
+                          color: AppColors.holdColor,
                           fontSize: 12,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),

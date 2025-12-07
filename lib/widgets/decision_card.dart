@@ -28,7 +28,7 @@ class DecisionCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Решение AI',
+                  'AI Decision',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 ActionBadge(action: decision.action),
@@ -38,7 +38,7 @@ class DecisionCard extends StatelessWidget {
             ConfidenceMeter(confidence: decision.confidence),
             const SizedBox(height: 12),
             Text(
-              'Причина:',
+              'Reason:',
               style: Theme.of(context).textTheme.labelMedium,
             ),
             const SizedBox(height: 4),
@@ -48,7 +48,7 @@ class DecisionCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Версия модели: ${decision.modelVersion}',
+              'Model Version: ${decision.modelVersion}',
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],

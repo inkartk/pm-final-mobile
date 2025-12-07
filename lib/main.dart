@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'screens/dashboard_screen.dart';
-import 'providers/settings_provider.dart';
+import 'screens/crypto_list_screen.dart';
 import 'utils/app_theme.dart';
 import 'utils/constants.dart';
 
@@ -13,19 +12,16 @@ void main() {
   );
 }
 
-class MyApp extends ConsumerWidget {
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final settings = ref.watch(settingsProvider);
-
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: AppStrings.appName,
-      theme: AppTheme.lightTheme(),
-      darkTheme: AppTheme.darkTheme(),
-      themeMode: settings.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      home: const DashboardScreen(),
+      theme: AppTheme.darkTheme(),
+      themeMode: ThemeMode.dark,
+      home: const CryptoListScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

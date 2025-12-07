@@ -11,16 +11,77 @@ import 'trade_history_screen.dart';
 import 'agent_logs_screen.dart';
 import 'settings_screen.dart';
 
-class DashboardScreen extends ConsumerWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
+class DashboardScreen extends ConsumerStatefulWidget {
+  final String symbol;
+
+  const DashboardScreen({
+    Key? key,
+    required this.symbol,
+  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends ConsumerState<DashboardScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Run cycle automatically when entering this screen
+    Future.microtask(() {
+      ref.read(tradingCycleProvider.notifier).runCycle(symbol: widget.symbol);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final cycleState = ref.watch(tradingCycleProvider);
+
+    // Get crypto info for display
+    final cryptoInfo = AppStrings.cryptoList.firstWhere(
+      (crypto) => crypto.symbol == widget.symbol,
+      orElse: () => AppStrings.cryptoList[0],
+    );
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(AppStrings.appName),
+        title: Row(
+          children: [
+            Container(
+              width: 36,
+              height: 36,
+              decoration: BoxDecoration(
+                color: cryptoInfo.color.withOpacity(0.2),
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Text(
+                  cryptoInfo.icon,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: cryptoInfo.color,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  cryptoInfo.name,
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  cryptoInfo.shortName,
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              ],
+            ),
+          ],
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.history),
@@ -30,17 +91,17 @@ class DashboardScreen extends ConsumerWidget {
                 MaterialPageRoute(builder: (_) => const TradeHistoryScreen()),
               );
             },
-            tooltip: 'История сделок',
+            tooltip: 'Trade History',
           ),
           IconButton(
-            icon: const Icon(Icons.settings),
+            icon: const Icon(Icons.info_outline),
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const SettingsScreen()),
               );
             },
-            tooltip: 'Настройки',
+            tooltip: 'About App',
           ),
         ],
       ),
@@ -69,7 +130,7 @@ class DashboardScreen extends ConsumerWidget {
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () => ref.read(tradingCycleProvider.notifier).runCycle(),
-                child: const Text('Повторить'),
+                child: const Text('Retry'),
               ),
             ],
           ),
@@ -95,7 +156,7 @@ class DashboardScreen extends ConsumerWidget {
                   ElevatedButton.icon(
                     onPressed: () => ref.read(tradingCycleProvider.notifier).runCycle(),
                     icon: const Icon(Icons.play_arrow),
-                    label: const Text('Запустить торговый цикл'),
+                    label: const Text('Start Trading Cycle'),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 32,
@@ -132,7 +193,7 @@ class DashboardScreen extends ConsumerWidget {
                       vertical: AppSizes.paddingSmall,
                     ),
                     child: Text(
-                      'Коммуникация агентов',
+                      'Agent Communication',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -145,9 +206,9 @@ class DashboardScreen extends ConsumerWidget {
                     agentName: AppStrings.marketMonitorAgent,
                     status: AppStrings.statusCompleted,
                     statusColor: AppColors.completedColor,
-                    input: 'Запрос на мониторинг ${cycle.marketData.symbol}',
-                    action: 'Получена цена \$${cycle.marketData.price.toStringAsFixed(2)}, рассчитаны индикаторы',
-                    output: 'Данные отправлены Decision Maker (Цена, SMA_10, SMA_50, RSI_14)',
+                    input: 'Request to monitor ${cycle.marketData.symbol}',
+                    action: 'Fetched price \$${cycle.marketData.price.toStringAsFixed(2)}, calculated indicators',
+                    output: 'Data sent to Decision Maker (Price, SMA_10, SMA_50, RSI_14)',
                   ),
 
                   // Arrow down
@@ -167,9 +228,9 @@ class DashboardScreen extends ConsumerWidget {
                     agentName: AppStrings.decisionMakerAgent,
                     status: AppStrings.statusCompleted,
                     statusColor: AppColors.completedColor,
-                    input: 'Рыночные данные с индикаторами',
-                    action: 'ML модель предсказала ${cycle.decision.action} (${(cycle.decision.confidence * 100).toInt()}%)',
-                    output: 'Решение: ${cycle.decision.action} отправлено Execution Agent',
+                    input: 'Market data with indicators',
+                    action: 'ML model predicted ${cycle.decision.action} (${(cycle.decision.confidence * 100).toInt()}%)',
+                    output: 'Decision: ${cycle.decision.action} sent to Execution Agent',
                   ),
 
                   // Arrow down
@@ -191,11 +252,11 @@ class DashboardScreen extends ConsumerWidget {
                     statusColor: cycle.execution.status == AppStrings.statusFilled
                         ? AppColors.completedColor
                         : AppColors.warningColor,
-                    input: 'Решение: ${cycle.decision.action}',
+                    input: 'Decision: ${cycle.decision.action}',
                     action: cycle.execution.executed
-                        ? 'Симуляция исполнения сделки'
-                        : 'Сделка пропущена (HOLD)',
-                    output: 'Ордер ${cycle.execution.orderId}, Статус: ${cycle.execution.status}',
+                        ? 'Simulating trade execution'
+                        : 'Trade skipped (HOLD)',
+                    output: 'Order ${cycle.execution.orderId}, Status: ${cycle.execution.status}',
                   ),
 
                   const SizedBox(height: 24),
@@ -218,19 +279,19 @@ class DashboardScreen extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Сводка цикла',
+                              'Cycle Summary',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             const Divider(),
-                            _buildSummaryRow('ID цикла', '#${cycle.cycleId}', context),
-                            _buildSummaryRow('Символ', cycle.marketData.symbol, context),
-                            _buildSummaryRow('Финальное действие', cycle.decision.action, context),
+                            _buildSummaryRow('Cycle ID', '#${cycle.cycleId}', context),
+                            _buildSummaryRow('Symbol', cycle.marketData.symbol, context),
+                            _buildSummaryRow('Final Action', cycle.decision.action, context),
                             _buildSummaryRow(
-                              'Уверенность',
+                              'Confidence',
                               '${(cycle.decision.confidence * 100).toInt()}%',
                               context,
                             ),
-                            _buildSummaryRow('Статус исполнения', cycle.execution.status, context),
+                            _buildSummaryRow('Execution Status', cycle.execution.status, context),
                             const SizedBox(height: 12),
                             SizedBox(
                               width: double.infinity,
@@ -244,7 +305,7 @@ class DashboardScreen extends ConsumerWidget {
                                   );
                                 },
                                 icon: const Icon(Icons.article_outlined),
-                                label: const Text('Посмотреть детальные логи'),
+                                label: const Text('View Detailed Logs'),
                               ),
                             ),
                           ],
@@ -261,8 +322,8 @@ class DashboardScreen extends ConsumerWidget {
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => ref.read(tradingCycleProvider.notifier).runCycle(),
-        label: const Text('Запустить цикл'),
+        onPressed: () => ref.read(tradingCycleProvider.notifier).runCycle(symbol: widget.symbol),
+        label: const Text('Start Cycle'),
         icon: const Icon(Icons.play_arrow),
       ),
     );

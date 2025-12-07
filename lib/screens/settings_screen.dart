@@ -1,134 +1,132 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../providers/settings_provider.dart';
 import '../utils/constants.dart';
 
-class SettingsScreen extends ConsumerWidget {
+class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final settings = ref.watch(settingsProvider);
-
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Настройки'),
+        title: const Text('About App'),
       ),
       body: ListView(
+        padding: const EdgeInsets.all(AppSizes.paddingMedium),
         children: [
-          // Dark Mode Section
-          Card(
-            margin: const EdgeInsets.all(AppSizes.paddingMedium),
-            child: SwitchListTile(
-              title: const Text('Тёмная тема'),
-              subtitle: const Text('Переключить между светлой и тёмной темой'),
-              value: settings.isDarkMode,
-              onChanged: (_) => ref.read(settingsProvider.notifier).toggleDarkMode(),
-              secondary: Icon(
-                settings.isDarkMode ? Icons.dark_mode : Icons.light_mode,
+          // App Icon Section
+          Center(
+            child: Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                color: AppColors.activeColor.withOpacity(0.2),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.auto_graph,
+                size: 50,
+                color: AppColors.activeColor,
               ),
             ),
           ),
-
-          // Presentation Mode Section
-          Card(
-            margin: const EdgeInsets.symmetric(
-              horizontal: AppSizes.paddingMedium,
-              vertical: AppSizes.paddingSmall,
-            ),
-            child: SwitchListTile(
-              title: const Text('Режим презентации'),
-              subtitle: const Text('Увеличенные шрифты для демонстрации'),
-              value: settings.isPresentationMode,
-              onChanged: (_) => ref.read(settingsProvider.notifier).togglePresentationMode(),
-              secondary: const Icon(Icons.slideshow),
-            ),
-          ),
-
-          // Trading Symbol Section
-          Card(
-            margin: const EdgeInsets.symmetric(
-              horizontal: AppSizes.paddingMedium,
-              vertical: AppSizes.paddingSmall,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(AppSizes.paddingMedium),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.currency_bitcoin),
-                      const SizedBox(width: 16),
-                      Text(
-                        'Торговая пара по умолчанию',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 8,
-                    children: AppStrings.tradingSymbols.map((symbol) {
-                      final isSelected = settings.defaultSymbol == symbol;
-                      return ChoiceChip(
-                        label: Text(symbol),
-                        selected: isSelected,
-                        onSelected: (_) {
-                          ref.read(settingsProvider.notifier).setDefaultSymbol(symbol);
-                        },
-                      );
-                    }).toList(),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
           const SizedBox(height: 24),
 
-          // About Section
+          // App Info Card
           Card(
-            margin: const EdgeInsets.symmetric(
-              horizontal: AppSizes.paddingMedium,
-              vertical: AppSizes.paddingSmall,
-            ),
             child: Padding(
               padding: const EdgeInsets.all(AppSizes.paddingLarge),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'О приложении',
+                    'Information',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const Divider(),
                   const SizedBox(height: 8),
-                  _buildInfoRow('Название', AppStrings.appName),
-                  _buildInfoRow('Версия', AppStrings.appVersion),
-                  const SizedBox(height: 8),
+                  _buildInfoRow('Name', AppStrings.appName),
+                  _buildInfoRow('Version', AppStrings.appVersion),
+                  const SizedBox(height: 16),
                   Text(
                     AppStrings.appDescription,
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Colors.grey,
+                        ),
                   ),
-                  const SizedBox(height: 16),
-                  Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.orange.shade50,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
+                ],
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 16),
+
+          // Agents Info Card
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(AppSizes.paddingLarge),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'System Agents',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const Divider(),
+                  const SizedBox(height: 12),
+                  _buildAgentRow(
+                    Icons.radar,
+                    AppStrings.marketMonitorAgent,
+                    'Real-time market monitoring',
+                  ),
+                  const SizedBox(height: 12),
+                  _buildAgentRow(
+                    Icons.psychology,
+                    AppStrings.decisionMakerAgent,
+                    'ML models for decision making',
+                  ),
+                  const SizedBox(height: 12),
+                  _buildAgentRow(
+                    Icons.check_circle,
+                    AppStrings.executionAgent,
+                    'Trading decision execution',
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 16),
+
+          // Warning Card
+          Card(
+            color: AppColors.warningColor.withOpacity(0.1),
+            child: Padding(
+              padding: const EdgeInsets.all(AppSizes.paddingLarge),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.warning_amber_rounded,
+                    color: AppColors.warningColor,
+                    size: 40,
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(Icons.warning_amber, color: Colors.orange.shade700),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            'Это учебный проект. Все сделки симулированы.',
-                            style: TextStyle(
-                              color: Colors.orange.shade900,
-                              fontSize: 12,
-                            ),
+                        const Text(
+                          'Educational Project',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'All trades are simulated. No real money is used.',
+                          style: TextStyle(
+                            color: Colors.white.withOpacity(0.7),
+                            fontSize: 13,
                           ),
                         ),
                       ],
@@ -159,6 +157,48 @@ class SettingsScreen extends ConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildAgentRow(IconData icon, String title, String subtitle) {
+    return Row(
+      children: [
+        Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            color: AppColors.activeColor.withOpacity(0.2),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(
+            icon,
+            color: AppColors.activeColor,
+            size: 20,
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+              ),
+              Text(
+                subtitle,
+                style: TextStyle(
+                  color: Colors.grey.shade400,
+                  fontSize: 12,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

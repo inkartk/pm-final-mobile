@@ -2,62 +2,7 @@ import 'package:flutter/material.dart';
 import 'constants.dart';
 
 class AppTheme {
-  // Light Theme
-  static ThemeData lightTheme() {
-    return ThemeData(
-      useMaterial3: true,
-      brightness: Brightness.light,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColors.activeColor,
-        brightness: Brightness.light,
-      ),
-      scaffoldBackgroundColor: AppColors.lightBackground,
-      cardTheme: CardTheme(
-        color: AppColors.lightCardBackground,
-        elevation: AppSizes.elevationLow,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSizes.borderRadiusMedium),
-        ),
-      ),
-      appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 0,
-        centerTitle: false,
-      ),
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: AppColors.activeColor,
-        foregroundColor: Colors.white,
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.activeColor,
-          foregroundColor: Colors.white,
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSizes.paddingLarge,
-            vertical: AppSizes.paddingMedium,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppSizes.borderRadiusSmall),
-          ),
-        ),
-      ),
-      chipTheme: ChipThemeData(
-        backgroundColor: Colors.grey.shade200,
-        labelStyle: const TextStyle(fontSize: 12),
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSizes.paddingSmall,
-          vertical: 4,
-        ),
-      ),
-      dividerTheme: const DividerThemeData(
-        thickness: 1,
-        space: 20,
-      ),
-    );
-  }
-
-  // Dark Theme
+  // Dark Theme (only theme)
   static ThemeData darkTheme() {
     return ThemeData(
       useMaterial3: true,
@@ -65,6 +10,8 @@ class AppTheme {
       colorScheme: ColorScheme.fromSeed(
         seedColor: AppColors.activeColor,
         brightness: Brightness.dark,
+        primary: AppColors.activeColor,
+        secondary: AppColors.activeColor,
       ),
       scaffoldBackgroundColor: AppColors.darkBackground,
       cardTheme: CardTheme(
@@ -75,12 +22,12 @@ class AppTheme {
         ),
       ),
       appBarTheme: const AppBarTheme(
-        backgroundColor: Color(0xFF1E1E1E),
+        backgroundColor: AppColors.darkCardBackground,
         foregroundColor: Colors.white,
         elevation: 0,
         centerTitle: false,
       ),
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: AppColors.activeColor,
         foregroundColor: Colors.white,
       ),
@@ -98,14 +45,15 @@ class AppTheme {
         ),
       ),
       chipTheme: ChipThemeData(
-        backgroundColor: Colors.grey.shade800,
-        labelStyle: const TextStyle(fontSize: 12),
+        backgroundColor: AppColors.darkCardBackgroundHighlight,
+        labelStyle: const TextStyle(fontSize: 12, color: Colors.white),
         padding: const EdgeInsets.symmetric(
           horizontal: AppSizes.paddingSmall,
           vertical: 4,
         ),
       ),
-      dividerTheme: const DividerThemeData(
+      dividerTheme: DividerThemeData(
+        color: Colors.white.withOpacity(0.1),
         thickness: 1,
         space: 20,
       ),
