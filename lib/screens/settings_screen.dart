@@ -13,7 +13,6 @@ class SettingsScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(AppSizes.paddingMedium),
         children: [
-          // App Icon Section
           Center(
             child: Container(
               width: 100,
@@ -31,7 +30,6 @@ class SettingsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 24),
 
-          // App Info Card
           Card(
             child: Padding(
               padding: const EdgeInsets.all(AppSizes.paddingLarge),
@@ -60,7 +58,6 @@ class SettingsScreen extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          // Agents Info Card
           Card(
             child: Padding(
               padding: const EdgeInsets.all(AppSizes.paddingLarge),
@@ -97,7 +94,6 @@ class SettingsScreen extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          // Warning Card
           Card(
             color: AppColors.warningColor.withOpacity(0.1),
             child: Padding(

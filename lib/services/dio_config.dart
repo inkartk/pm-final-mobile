@@ -1,19 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
-/// Configuration class for Dio HTTP client
 class DioConfig {
-  // Backend API base URL
-  // Для macOS/iOS Simulator используйте: http://localhost:8000
-  // Для Android Emulator используйте: http://10.0.2.2:8000
   static const String baseUrl = 'http://localhost:8000';
 
-  // Timeouts
   static const Duration connectTimeout = Duration(seconds: 30);
   static const Duration receiveTimeout = Duration(seconds: 30);
   static const Duration sendTimeout = Duration(seconds: 30);
 
-  /// Create configured Dio instance
   static Dio createDio() {
     final dio = Dio(
       BaseOptions(
@@ -25,14 +19,12 @@ class DioConfig {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
-        // Принимаем все статусы для ручной обработки ошибок
         validateStatus: (status) {
           return status != null && status < 500;
         },
       ),
     );
 
-    // Добавляем логирование для отладки
     final logger = Logger(
       printer: PrettyPrinter(
         methodCount: 0,
@@ -55,7 +47,6 @@ class DioConfig {
       ),
     );
 
-    // Interceptor для обработки ошибок
     dio.interceptors.add(
       InterceptorsWrapper(
         onError: (DioException error, ErrorInterceptorHandler handler) {

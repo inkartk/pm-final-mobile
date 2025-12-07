@@ -25,7 +25,6 @@ class CryptoListScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header Section
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(AppSizes.paddingLarge),
@@ -62,7 +61,6 @@ class CryptoListScreen extends StatelessWidget {
             ),
           ),
 
-          // Crypto List
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(AppSizes.paddingMedium),
@@ -174,7 +172,6 @@ class _CryptoCard extends StatelessWidget {
                           height: 40,
                           fit: BoxFit.contain,
                           errorBuilder: (context, error, stackTrace) {
-                            // Fallback to icon if image fails to load
                             return crypto.iconData != null
                                 ? Icon(
                                     crypto.iconData,
@@ -209,7 +206,6 @@ class _CryptoCard extends StatelessWidget {
               ),
               const SizedBox(width: AppSizes.paddingMedium),
 
-              // Crypto Info
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -234,7 +230,6 @@ class _CryptoCard extends StatelessWidget {
                 ),
               ),
 
-              // Arrow Icon
               Icon(
                 Icons.arrow_forward_ios,
                 color: AppColors.activeColor.withOpacity(0.5),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'constants.dart';
 
 class AppTheme {
-  // Dark Theme (only theme)
   static ThemeData darkTheme() {
     return ThemeData(
       useMaterial3: true,
@@ -60,7 +59,6 @@ class AppTheme {
     );
   }
 
-  // Get color for trading action
   static Color getActionColor(String action) {
     switch (action.toUpperCase()) {
       case 'BUY':
@@ -74,7 +72,6 @@ class AppTheme {
     }
   }
 
-  // Get color for confidence level
   static Color getConfidenceColor(double confidence) {
     if (confidence > 0.75) {
       return AppColors.confidenceHigh;
@@ -85,7 +82,6 @@ class AppTheme {
     }
   }
 
-  // Get icon for trading action
   static IconData getActionIcon(String action) {
     switch (action.toUpperCase()) {
       case 'BUY':

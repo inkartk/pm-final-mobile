@@ -5,20 +5,17 @@ import '../services/api_client.dart';
 import '../services/dio_config.dart';
 import 'trade_history_provider.dart';
 
-// API Client Provider
 final apiClientProvider = Provider<ApiClient>((ref) {
   final dio = DioConfig.createDio();
   return ApiClient(dio);
 });
 
-// Trading Cycle Notifier
 class TradingCycleNotifier extends StateNotifier<AsyncValue<TradingCycleResponse?>> {
   final ApiClient _apiClient;
   final Ref _ref;
 
   TradingCycleNotifier(this._apiClient, this._ref) : super(const AsyncValue.data(null));
 
-  // Run a trading cycle
   Future<void> runCycle({String symbol = 'BNBUSDT'}) async {
     state = const AsyncValue.loading();
 
@@ -26,10 +23,8 @@ class TradingCycleNotifier extends StateNotifier<AsyncValue<TradingCycleResponse
       final result = await _apiClient.runTradingCycle(symbol: symbol);
       state = AsyncValue.data(result);
 
-      // Автоматически обновляем историю сделок после успешного цикла
       _ref.read(tradeHistoryProvider.notifier).refresh();
     } on DioException catch (e) {
-      // Обработка сетевых ошибок
       if (e.type == DioExceptionType.connectionTimeout ||
           e.type == DioExceptionType.receiveTimeout) {
         state = AsyncValue.error(
@@ -52,7 +47,6 @@ class TradingCycleNotifier extends StateNotifier<AsyncValue<TradingCycleResponse
     }
   }
 
-  // Refresh the current cycle
   Future<void> refresh() async {
     if (state.value != null) {
       final currentSymbol = state.value!.marketData.symbol;
@@ -63,7 +57,6 @@ class TradingCycleNotifier extends StateNotifier<AsyncValue<TradingCycleResponse
   }
 }
 
-// Trading Cycle Provider
 final tradingCycleProvider =
     StateNotifierProvider<TradingCycleNotifier, AsyncValue<TradingCycleResponse?>>((ref) {
   final apiClient = ref.watch(apiClientProvider);

@@ -22,7 +22,6 @@ class AgentLogsScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(AppSizes.paddingMedium),
         children: [
-          // Cycle info header
           Card(
             child: Padding(
               padding: const EdgeInsets.all(AppSizes.paddingMedium),
@@ -53,7 +52,6 @@ class AgentLogsScreen extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          // Market Monitor Agent Logs
           _buildLogSection(
             context,
             AppStrings.marketMonitorAgent,
@@ -63,7 +61,6 @@ class AgentLogsScreen extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          // Decision Maker Agent Logs
           _buildLogSection(
             context,
             AppStrings.decisionMakerAgent,
@@ -73,7 +70,6 @@ class AgentLogsScreen extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          // Execution Agent Logs
           _buildLogSection(
             context,
             AppStrings.executionAgent,
@@ -83,7 +79,6 @@ class AgentLogsScreen extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          // Info card explaining the flow
           Card(
             color: AppColors.infoColor.withOpacity(0.15),
             child: Padding(

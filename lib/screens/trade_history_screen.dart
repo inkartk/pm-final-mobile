@@ -16,7 +16,6 @@ class _TradeHistoryScreenState extends ConsumerState<TradeHistoryScreen> {
   @override
   void initState() {
     super.initState();
-    // Автоматически обновляем данные при входе на экран
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(tradeHistoryProvider.notifier).refresh();
     });

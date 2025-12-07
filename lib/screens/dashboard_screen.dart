@@ -28,7 +28,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    // Run cycle automatically when entering this screen
     Future.microtask(() {
       ref.read(tradingCycleProvider.notifier).runCycle(symbol: widget.symbol);
     });
@@ -38,7 +37,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   Widget build(BuildContext context) {
     final cycleState = ref.watch(tradingCycleProvider);
 
-    // Get crypto info for display
     final cryptoInfo = AppStrings.cryptoList.firstWhere(
       (crypto) => crypto.symbol == widget.symbol,
       orElse: () => AppStrings.cryptoList[0],
@@ -206,17 +204,14 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Flow indicator showing all 3 steps completed
                   const AgentFlowIndicator(activeStep: 3),
 
                   const SizedBox(height: 16),
 
-                  // Current price card
                   PriceCard(marketData: cycle.marketData),
 
                   const SizedBox(height: 8),
 
-                  // Section header
                   const Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: AppSizes.paddingMedium,
@@ -231,7 +226,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     ),
                   ),
 
-                  // Market Monitor Agent Card
                   AgentCard(
                     agentName: AppStrings.marketMonitorAgent,
                     status: AppStrings.statusCompleted,
@@ -241,7 +235,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     output: 'Data sent to Decision Maker (Price, SMA_10, SMA_50, RSI_14)',
                   ),
 
-                  // Arrow down
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 8),
                     child: Center(
@@ -253,7 +246,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     ),
                   ),
 
-                  // Decision Maker Agent Card
                   AgentCard(
                     agentName: AppStrings.decisionMakerAgent,
                     status: AppStrings.statusCompleted,
@@ -263,7 +255,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     output: 'Decision: ${cycle.decision.action} sent to Execution Agent',
                   ),
 
-                  // Arrow down
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 8),
                     child: Center(
@@ -275,7 +266,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     ),
                   ),
 
-                  // Execution Agent Card
                   AgentCard(
                     agentName: AppStrings.executionAgent,
                     status: cycle.execution.status,
@@ -291,15 +281,12 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
                   const SizedBox(height: 24),
 
-                  // Detailed decision card
                   DecisionCard(decision: cycle.decision),
 
-                  // Detailed execution card
                   ExecutionCard(execution: cycle.execution),
 
                   const SizedBox(height: 16),
 
-                  // Cycle summary card
                   Padding(
                     padding: const EdgeInsets.all(AppSizes.paddingMedium),
                     child: Card(
@@ -344,7 +331,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                     ),
                   ),
 
-                  const SizedBox(height: 80), // Space for FAB
+                  const SizedBox(height: 80),
                 ],
               ),
             ),
