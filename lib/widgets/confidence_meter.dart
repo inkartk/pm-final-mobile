@@ -13,7 +13,6 @@ class ConfidenceMeter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = AppTheme.getConfidenceColor(confidence);
-    final percentage = (confidence * 100).toInt();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,7 +21,7 @@ class ConfidenceMeter extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Уверенность',
+              'Confidence',
               style: Theme.of(context).textTheme.labelMedium,
             ),
             Text(

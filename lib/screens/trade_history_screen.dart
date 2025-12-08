@@ -27,12 +27,11 @@ class _TradeHistoryScreenState extends ConsumerState<TradeHistoryScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('История сделок'),
+        title: const Text('History'),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () => ref.read(tradeHistoryProvider.notifier).refresh(),
-            tooltip: 'Обновить',
           ),
         ],
       ),
@@ -112,7 +111,7 @@ class _TradeHistoryScreenState extends ConsumerState<TradeHistoryScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Детали сделки #${trade.id}',
+                  'Details #${trade.id}',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 IconButton(
@@ -123,13 +122,13 @@ class _TradeHistoryScreenState extends ConsumerState<TradeHistoryScreen> {
             ),
             const Divider(),
             const SizedBox(height: 8),
-            _buildDetailRow('Символ', trade.symbol),
-            _buildDetailRow('Действие', trade.action),
-            _buildDetailRow('Цена маркета', AppFormatters.formatPrice(trade.price)),
-            _buildDetailRow('Цена исполнения', AppFormatters.formatPrice(trade.executionPrice)),
-            _buildDetailRow('Статус', trade.status),
-            _buildDetailRow('ID ордера', trade.orderId),
-            _buildDetailRow('Время', AppFormatters.formatDateTime(trade.timestamp)),
+            _buildDetailRow('Symbol', trade.symbol),
+            _buildDetailRow('Action', trade.action),
+            _buildDetailRow('Market Price', AppFormatters.formatPrice(trade.price)),
+            _buildDetailRow('Price execute', AppFormatters.formatPrice(trade.executionPrice)),
+            _buildDetailRow('Status', trade.status),
+            _buildDetailRow('Order Id', trade.orderId),
+            _buildDetailRow('Time', AppFormatters.formatDateTime(trade.timestamp)),
             const SizedBox(height: 16),
           ],
         ),

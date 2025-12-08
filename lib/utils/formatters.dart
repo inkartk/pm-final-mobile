@@ -28,27 +28,31 @@ class AppFormatters {
   }
 
   static String formatDateTime(DateTime dateTime) {
-    final localTime = dateTime.toLocal();
+    // Добавляем +5 часов к UTC времени
+    final localTime = dateTime.add(Duration(hours: 5));
     final formatter = DateFormat('MMM dd, yyyy HH:mm:ss');
     return formatter.format(localTime);
   }
 
   static String formatTime(DateTime dateTime) {
-    final localTime = dateTime.toLocal();
+    // Добавляем +5 часов к UTC времени
+    final localTime = dateTime.add(Duration(hours: 5));
     final formatter = DateFormat('HH:mm:ss');
     return formatter.format(localTime);
   }
 
 
   static String formatDate(DateTime dateTime) {
-    final localTime = dateTime.toLocal();
+    // Добавляем +5 часов к UTC времени
+    final localTime = dateTime.add(Duration(hours: 5));
     final formatter = DateFormat('MMM dd, yyyy');
     return formatter.format(localTime);
   }
 
 
   static String formatRelativeTime(DateTime dateTime) {
-    final localTime = dateTime.toLocal();
+    // Добавляем +5 часов к UTC времени
+    final localTime = dateTime.add(Duration(hours: 5));
     final now = DateTime.now();
     final difference = now.difference(localTime);
 

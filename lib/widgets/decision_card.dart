@@ -45,12 +45,7 @@ class DecisionCard extends StatelessWidget {
             Text(
               decision.reason,
               style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Model Version: ${decision.modelVersion}',
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
+            ),            
           ],
         ),
       ),

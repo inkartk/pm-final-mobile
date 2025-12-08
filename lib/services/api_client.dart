@@ -19,8 +19,4 @@ abstract class ApiClient {
   @GET('/trading/trades')
   Future<List<Trade>> getTradeHistory();
   
-  @GET('/trading/market/latest')
-  Future<MarketData> getLatestMarketData({
-    @Query('symbol') String symbol = 'ETHUSDT',
-  });
 }
